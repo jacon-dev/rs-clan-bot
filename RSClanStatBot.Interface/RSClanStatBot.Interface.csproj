@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Company>Jacon .NET</Company>
         <Product>RS Clan Stat Bot - Inteface</Product>
         <AssemblyVersion>1.0</AssemblyVersion>
@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Discord.Net.WebSocket" Version="2.4.0" />
+      <PackageReference Include="Discord.Net.WebSocket" Version="3.17.2" />
     </ItemGroup>
 
 </Project>
