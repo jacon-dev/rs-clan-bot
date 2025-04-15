@@ -1,0 +1,10 @@
+.idea/
+bin/
+obj/
+nppBackup/
+*.config
+.vs/Project/v16/.suo
+.vs/RSClanStatBot/DesignTimeBuild/.dtbcache.v2
+.vs/RSClanStatBot/v16/.suo
+*.sqlite
+.vs/VSWorkspaceState.json

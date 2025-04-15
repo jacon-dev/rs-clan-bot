@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Company>Jacon .NET</Company>
+        <Product>RS Clan Stat Bot - Core</Product>
+        <AssemblyVersion>1.0</AssemblyVersion>
+    </PropertyGroup>
+
+</Project>
