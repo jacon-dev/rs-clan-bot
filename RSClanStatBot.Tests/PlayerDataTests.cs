@@ -57,7 +57,11 @@ namespace RSClanStatBot.Tests
 
             var result = sut.Convert(jsonContent);
 
-            Assert.That(result, Is.Null);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.HasCapped, Is.False);
+            Assert.That(result.PlayerName, Is.EqualTo(FakePlayerName));
+            Assert.That(result.HasErrored, Is.False);
+            Assert.That(result.IsPrivate, Is.True);
         }
 
         [Test]
