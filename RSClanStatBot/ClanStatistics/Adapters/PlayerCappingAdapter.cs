@@ -23,14 +23,24 @@ namespace RSClanStatBot.ClanStatistics.Adapters
                 return new CacheResponse { HasCapped = false, HasErrored = true, Message = cacheEntry.Message };
             
             var apiCappingStat = await playerService.GetPlayerCappingStatisticsAsync(cacheEntry.PlayerName);
-            return apiCappingStat.HasErrored
-                ? new CacheResponse
+
+            if (apiCappingStat.HasErrored)
+                return new CacheResponse
                 {
                     HasCapped = false,
                     HasErrored = true,
-                    Message = Logger.Log($"Oops, something went wrong setting the cap for {rsName}!")
-                }
-                : factory.Single(x => x.Handled == ClanConstants.CappingCacheKeyPrefix)
+                    Message = Logger.Log($"Oops, something went wrong setting the cap for {cacheEntry.PlayerName}!")
+                };
+
+            if (apiCappingStat.IsPrivate)
+                return new CacheResponse
+                {
+                    HasCapped = false,
+                    HasErrored = false,
+                    Message = Logger.Log($"Profile is set to private for {cacheEntry.PlayerName}!")
+                };
+
+            return factory.Single(x => x.Handled == ClanConstants.CappingCacheKeyPrefix)
                     .CreateEntry(cacheEntry.PlayerName, apiCappingStat.HasCapped);
         }
     }
