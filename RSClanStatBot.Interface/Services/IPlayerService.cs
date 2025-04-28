@@ -1,9 +1,10 @@
 ﻿using RSClanStatBot.Core.Models;
+using System.Threading.Tasks;
 
 namespace RSClanStatBot.Interface.Services
 {
     public interface IPlayerService
     {
-        PlayerCappingStatistic GetPlayerCappingStatistics(string playerName);
+        Task<PlayerCappingStatistic> GetPlayerCappingStatisticsAsync(string playerName);
     }
 }

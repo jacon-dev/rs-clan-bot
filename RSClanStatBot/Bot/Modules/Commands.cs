@@ -10,31 +10,17 @@ using RSClanStatBot.Interface.Caching;
 
 namespace RSClanStatBot.Bot.Modules
 {
-    public class Commands : ModuleBase<SocketCommandContext>
+    public class Commands(IPlayerCappingAdapter playerCappingAdapter, IPlotAdapter plotAdapter,
+            IDiscordAuthorAdapter discordAuthorAdapter, ICacheManager cacheManager, CommandService commandService) : ModuleBase<SocketCommandContext>
     {
         private const string IgnoreSummary = "IGNORE_SUMMARY";
-        private readonly IPlayerCappingAdapter _playerCappingAdapter;
-        private readonly IPlotAdapter _plotAdapter;
-        private readonly IDiscordAuthorAdapter _discordAuthorAdapter;
-        private readonly ICacheManager _cacheManager;
-        private readonly CommandService _commandService;
-
-        public Commands(IPlayerCappingAdapter playerCappingAdapter, IPlotAdapter plotAdapter, 
-            IDiscordAuthorAdapter discordAuthorAdapter, ICacheManager cacheManager, CommandService commandService)
-        {
-            _playerCappingAdapter = playerCappingAdapter;
-            _plotAdapter = plotAdapter;
-            _discordAuthorAdapter = discordAuthorAdapter;
-            _cacheManager = cacheManager;
-            _commandService = commandService;
-        }
         
         [Command("set", RunMode = RunMode.Async)]
         [Summary("Set your RuneScape Name against your Discord Username")]
         [Remarks("<RuneScape Player Name>")]
         public async Task SetRsName([Remainder] string rsName)
         {
-            await Context.Message.AddReactionAsync(_discordAuthorAdapter.AddAuthorRsName(Context.User.Username, rsName).IsValid 
+            await Context.Message.AddReactionAsync(discordAuthorAdapter.AddAuthorRsName(Context.User.Username, rsName).IsValid 
                 ? new Emoji(BotReactions.GreenCircle) 
                 : new Emoji(BotReactions.RedCircle));
         }
@@ -43,7 +29,7 @@ namespace RSClanStatBot.Bot.Modules
         [Remarks(IgnoreSummary)]
         public async Task SetPlayerAsCapped()
         {
-            var response = _playerCappingAdapter.SetCap(Context.User.Username);
+            var response = await playerCappingAdapter.SetCapAsync(Context.User.Username);
             await Context.Message.AddReactionAsync(response.HasErrored
                 ? new Emoji(BotReactions.RedCircle)
                 : response.HasCapped
@@ -56,7 +42,7 @@ namespace RSClanStatBot.Bot.Modules
         [Remarks("<RuneScape Player Name>")]
         public async Task SetManualCap([Remainder] string playerName)
         {
-            var response = _playerCappingAdapter.SetCap(Context.User.Username, playerName);
+            var response = await playerCappingAdapter.SetCapAsync(Context.User.Username, playerName);
             await Context.Message.AddReactionAsync(response.HasErrored
                 ? new Emoji(BotReactions.RedCircle)
                 : response.HasCapped
@@ -69,7 +55,7 @@ namespace RSClanStatBot.Bot.Modules
         public async Task StartNewPlotWeek()
         {
             await Context.Channel.TriggerTypingAsync();
-            await ReplyAsync(_plotAdapter.UpkeepMet);
+            await ReplyAsync(plotAdapter.UpkeepMet);
         }
 
         [Command("tick", RunMode = RunMode.Async)]
@@ -81,7 +67,7 @@ namespace RSClanStatBot.Bot.Modules
             await Context.Channel.TriggerTypingAsync();
             if (TimeSpan.TryParse(time, out var timeSpan))
             {
-                await ReplyAsync(_plotAdapter.Tick(day, timeSpan, Context.Channel));
+                await ReplyAsync(plotAdapter.Tick(day, timeSpan, Context.Channel));
             }
             else
             {
@@ -94,7 +80,7 @@ namespace RSClanStatBot.Bot.Modules
         [Summary("ADMIN ONLY \n Cancel the existing build tick")]
         public async Task CancelTick()
         {
-            await Context.Message.AddReactionAsync(_plotAdapter.CancelTick() 
+            await Context.Message.AddReactionAsync(plotAdapter.CancelTick() 
                 ? new Emoji(BotReactions.GreenCircle) 
                 : new Emoji(BotReactions.RedCircle));
         }
@@ -104,7 +90,7 @@ namespace RSClanStatBot.Bot.Modules
         [Summary("ADMIN ONLY \n Load any backed up Set and Capped caching")]
         public async Task LoadCacheBackup()
         {
-            await Context.Message.AddReactionAsync(_cacheManager.LoadBackup()
+            await Context.Message.AddReactionAsync(cacheManager.LoadBackup()
                 ? new Emoji(BotReactions.GreenCircle) 
                 : new Emoji(BotReactions.RedCircle));
         }
@@ -114,7 +100,7 @@ namespace RSClanStatBot.Bot.Modules
         public async Task GetHelp()
         {
             await Context.Channel.TriggerTypingAsync();
-            var commands = _commandService.Commands.ToList();
+            var commands = commandService.Commands.ToList();
             var builder = new EmbedBuilder();
 
             foreach (var commandInfo in commands.Where(commandInfo => commandInfo.Remarks != IgnoreSummary))

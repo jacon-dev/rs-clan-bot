@@ -1,54 +1,32 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using Microsoft.AspNetCore.WebUtilities;
-using RSClanStatBot.Core.Models;
+﻿using RSClanStatBot.Core.Models;
 using RSClanStatBot.Core.Constants;
 using RSClanStatBot.Interface.Configuration;
 using RSClanStatBot.Interface.Converters;
 using RSClanStatBot.Interface.Services;
+using System.Net.Http;
+using RSClanStatBot.Bot.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace RSClanStatBot.ClanStatistics.Services
 {
-    public class PlayerService : IPlayerService
+    public class PlayerService(IApiConfiguration apiConfig, IPlayerDataToCappingStatisticConverter converter, IHttpClientFactory httpClientFactory) : IPlayerService
     {
-        private readonly IPlayerDataToCappingStatisticConverter _converter;
-        private readonly IApiConfiguration _apiConfig;
-
-        public PlayerService(IApiConfiguration apiConfig, IPlayerDataToCappingStatisticConverter converter)
+        public async Task<PlayerCappingStatistic> GetPlayerCappingStatisticsAsync(string playerName)
         {
-            _converter = converter;
-            _apiConfig = apiConfig;
-        }
-        
-        public PlayerCappingStatistic GetPlayerCappingStatistics(string playerName)
-        {
-            string responseContent = null;
-            var request = WebRequest.Create(
-                QueryHelpers.AddQueryString(_apiConfig.UserApi, 
-                    new Dictionary<string, string>
-                    {
-                        {"user", playerName},
-                        {"activities", ClanConstants.ActivityCount}
-                    }
-                )
-            );
+            using var client = httpClientFactory.CreateClient();
 
-            var response = request.GetResponse();
-
-            using (var dataStream = response.GetResponseStream())
+            try
             {
-                if(dataStream != null)
-                    responseContent = new StreamReader(dataStream).ReadToEnd();
+                var response = await client.GetAsync($"{apiConfig.UserApi}?user={playerName}&activities={ClanConstants.ActivityCount}");
+                response.EnsureSuccessStatusCode();
+                return converter.Convert(response.Content.ToString());
             }
-            
-            response.Close();
-            response.Dispose();
-            
-            if (responseContent == null || responseContent.Contains("error"))
-                return new PlayerCappingStatistic { HasErrored = true };
-            
-            return _converter.Convert(responseContent);
+            catch(Exception e)
+            {
+                Logger.Log($"Failed to get player data for {playerName}: {e.Message}");
+                return null;
+            }
         }
     }
 }
