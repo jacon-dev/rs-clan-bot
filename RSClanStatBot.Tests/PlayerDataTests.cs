@@ -1,0 +1,53 @@
+using FakeItEasy;
+using RSClanStatBot.ClanStatistics.Converters;
+using RSClanStatBot.Interface.Services;
+using System.Net;
+
+namespace RSClanStatBot.Tests
+{
+    public class PlayerDataTests
+    {
+        private IHelperService fakeHelperService;
+        private PlayerDataToCappingStatisticConverter sut;
+        private const string FakePlayerName = "FakePlayer";
+
+        [SetUp]
+        public void Setup()
+        {
+            fakeHelperService = A.Fake<IHelperService>();
+            sut = new PlayerDataToCappingStatisticConverter(fakeHelperService);
+        }
+
+        [Test]
+        public async Task A_player_has_capped_after_the_plot_refresh_shows_HasCapped_as_true()
+        {
+            var jsonContent = await new StreamReader("fake-player-api-response.json").ReadToEndAsync();
+
+            A.CallTo(() => fakeHelperService.GetLastPlotRefreshDate())
+                .Returns(new DateTime(2025, 4, 20));
+            
+            var result = sut.Convert(jsonContent);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.HasCapped, Is.True);
+            Assert.That(result.PlayerName, Is.EqualTo(FakePlayerName));
+            Assert.That(result.HasErrored, Is.False);
+        }
+
+        [Test]
+        public async Task A_player_has_capped_before_the_plot_refresh_shows_HasCapped_as_false()
+        {
+            var jsonContent = await new StreamReader("fake-player-api-response.json").ReadToEndAsync();
+
+            A.CallTo(() => fakeHelperService.GetLastPlotRefreshDate())
+                .Returns(new DateTime(2025, 4, 30));
+
+            var result = sut.Convert(jsonContent);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.HasCapped, Is.False);
+            Assert.That(result.PlayerName, Is.EqualTo(FakePlayerName));
+            Assert.That(result.HasErrored, Is.False);
+        }
+    }
+}

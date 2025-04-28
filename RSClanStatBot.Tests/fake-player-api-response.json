@@ -1,0 +1,292 @@
+{
+  "magic": 117638446,
+  "questsstarted": 0,
+  "totalskill": 3084,
+  "questscomplete": 350,
+  "questsnotstarted": 1,
+  "totalxp": 5038655267,
+  "ranged": 200000000,
+  "activities": [
+    {
+      "date": "25-Apr-2025 09:43",
+      "details": "I now have at least 196000000 experience points in the Mining skill.",
+      "text": "196000000XP in Mining"
+    },
+    {
+      "date": "23-Apr-2025 08:54",
+      "details": "I have capped at my Clan Citadel this week.",
+      "text": "Capped at my Clan Citadel."
+    },
+    {
+      "date": "23-Apr-2025 08:17",
+      "details": "I have visited my Clan Citadel this week.",
+      "text": "Visited my Clan Citadel."
+    },
+    {
+      "date": "23-Apr-2025 08:17",
+      "details": "I have maintained Fealty rank 3 with my clan.",
+      "text": "Maintained Clan Fealty 3"
+    },
+    {
+      "date": "23-Apr-2025 08:16",
+      "details": "I found a crystal triskelion fragment.",
+      "text": "I found a crystal triskelion fragment."
+    },
+    {
+      "date": "20-Apr-2025 20:08",
+      "details": "I now have at least 194000000 experience points in the Mining skill.",
+      "text": "194000000XP in Mining"
+    },
+    {
+      "date": "17-Apr-2025 18:07",
+      "details": "I now have at least 116000000 experience points in the Prayer skill.",
+      "text": "116000000XP in Prayer"
+    },
+    {
+      "date": "16-Apr-2025 08:11",
+      "details": "I have capped at my Clan Citadel this week.",
+      "text": "Capped at my Clan Citadel."
+    },
+    {
+      "date": "16-Apr-2025 07:26",
+      "details": "I have visited my Clan Citadel this week.",
+      "text": "Visited my Clan Citadel."
+    },
+    {
+      "date": "16-Apr-2025 07:26",
+      "details": "I have maintained Fealty rank 3 with my clan.",
+      "text": "Maintained Clan Fealty 3"
+    },
+    {
+      "date": "14-Apr-2025 16:51",
+      "details": "I now have at least 192000000 experience points in the Mining skill.",
+      "text": "192000000XP in Mining"
+    },
+    {
+      "date": "14-Apr-2025 13:00",
+      "details": "I helped reunite a lost duckling with her family, and learnt the philosophy of the duck along the way.",
+      "text": "Quest complete: Duck Quest"
+    },
+    {
+      "date": "09-Apr-2025 08:45",
+      "details": "I have capped at my Clan Citadel this week.",
+      "text": "Capped at my Clan Citadel."
+    },
+    {
+      "date": "09-Apr-2025 07:28",
+      "details": "I have visited my Clan Citadel this week.",
+      "text": "Visited my Clan Citadel."
+    },
+    {
+      "date": "09-Apr-2025 07:28",
+      "details": "I have maintained Fealty rank 3 with my clan.",
+      "text": "Maintained Clan Fealty 3"
+    },
+    {
+      "date": "08-Apr-2025 15:41",
+      "details": "I now have at least 114000000 experience points in the Prayer skill.",
+      "text": "114000000XP in Prayer"
+    },
+    {
+      "date": "08-Apr-2025 11:34",
+      "details": "I now have at least 190000000 experience points in the Mining skill.",
+      "text": "190000000XP in Mining"
+    },
+    {
+      "date": "07-Apr-2025 13:37",
+      "details": "I helped Leela overthrow her father and take control of Menaphos.",
+      "text": "Quest complete: Pharaoh's Folly"
+    },
+    {
+      "date": "03-Apr-2025 14:59",
+      "details": "I now have at least 188000000 experience points in the Mining skill.",
+      "text": "188000000XP in Mining"
+    },
+    {
+      "date": "28-Mar-2025 12:18",
+      "details": "I now have at least 160000000 experience points in the Herblore skill.",
+      "text": "160000000XP in Herblore"
+    }
+  ],
+  "skillvalues": [
+    {
+      "level": 120,
+      "xp": 2000000000,
+      "rank": 6113,
+      "id": 28
+    },
+    {
+      "level": 120,
+      "xp": 2000000000,
+      "rank": 2582,
+      "id": 27
+    },
+    {
+      "level": 120,
+      "xp": 2000000000,
+      "rank": 20128,
+      "id": 26
+    },
+    {
+      "level": 120,
+      "xp": 2000000000,
+      "rank": 9424,
+      "id": 24
+    },
+    {
+      "level": 99,
+      "xp": 2000000000,
+      "rank": 5667,
+      "id": 23
+    },
+    {
+      "level": 120,
+      "xp": 2000000000,
+      "rank": 7823,
+      "id": 19
+    },
+    {
+      "level": 120,
+      "xp": 2000000000,
+      "rank": 5897,
+      "id": 18
+    },
+    {
+      "level": 99,
+      "xp": 2000000000,
+      "rank": 6945,
+      "id": 16
+    },
+    {
+      "level": 99,
+      "xp": 2000000000,
+      "rank": 6903,
+      "id": 10
+    },
+    {
+      "level": 110,
+      "xp": 2000000000,
+      "rank": 5704,
+      "id": 8
+    },
+    {
+      "level": 99,
+      "xp": 2000000000,
+      "rank": 2727,
+      "id": 6
+    },
+    {
+      "level": 99,
+      "xp": 2000000000,
+      "rank": 9042,
+      "id": 4
+    },
+    {
+      "level": 99,
+      "xp": 2000000000,
+      "rank": 13004,
+      "id": 3
+    },
+    {
+      "level": 99,
+      "xp": 2000000000,
+      "rank": 10365,
+      "id": 1
+    },
+    {
+      "level": 110,
+      "xp": 1963405659,
+      "rank": 11444,
+      "id": 14
+    },
+    {
+      "level": 110,
+      "xp": 1645269689,
+      "rank": 11090,
+      "id": 11
+    },
+    {
+      "level": 120,
+      "xp": 1615033804,
+      "rank": 18019,
+      "id": 15
+    },
+    {
+      "level": 99,
+      "xp": 1545492762,
+      "rank": 13015,
+      "id": 0
+    },
+    {
+      "level": 99,
+      "xp": 1543535616,
+      "rank": 12851,
+      "id": 2
+    },
+    {
+      "level": 99,
+      "xp": 1528671620,
+      "rank": 8690,
+      "id": 22
+    },
+    {
+      "level": 110,
+      "xp": 1521795937,
+      "rank": 10211,
+      "id": 20
+    },
+    {
+      "level": 99,
+      "xp": 1517832049,
+      "rank": 10423,
+      "id": 21
+    },
+    {
+      "level": 99,
+      "xp": 1513004392,
+      "rank": 8740,
+      "id": 7
+    },
+    {
+      "level": 99,
+      "xp": 1504083538,
+      "rank": 9336,
+      "id": 25
+    },
+    {
+      "level": 99,
+      "xp": 1500960312,
+      "rank": 13785,
+      "id": 17
+    },
+    {
+      "level": 110,
+      "xp": 1288647332,
+      "rank": 9706,
+      "id": 9
+    },
+    {
+      "level": 110,
+      "xp": 1265848280,
+      "rank": 11712,
+      "id": 13
+    },
+    {
+      "level": 99,
+      "xp": 1256587288,
+      "rank": 10363,
+      "id": 12
+    },
+    {
+      "level": 99,
+      "xp": 1176384460,
+      "rank": 13114,
+      "id": 5
+    }
+  ],
+  "name": "FakePlayer",
+  "rank": "6,624",
+  "melee": 2619327633,
+  "combatlevel": 152,
+  "loggedIn": "false"
+}
