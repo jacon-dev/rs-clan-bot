@@ -1,7 +1,7 @@
 using FakeItEasy;
+using NUnit.Framework.Internal;
 using RSClanStatBot.ClanStatistics.Converters;
 using RSClanStatBot.Interface.Services;
-using System.Net;
 
 namespace RSClanStatBot.Tests
 {
@@ -71,6 +71,30 @@ namespace RSClanStatBot.Tests
             Assert.That(result.HasCapped, Is.False);
             Assert.That(result.PlayerName, Is.EqualTo(FakePlayerName));
             Assert.That(result.HasErrored, Is.False);
+        }
+
+        [Test]
+        public async Task A_player_that_has_errored_data_shows_HasErrored_as_true()
+        {
+            var jsonContent = await new StreamReader("fake-player-api-response-error.json").ReadToEndAsync();
+
+            var result = sut.Convert(null);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.HasCapped, Is.False);
+            Assert.That(result.PlayerName, Is.Null);
+            Assert.That(result.HasErrored, Is.True);
+        }
+
+        [Test]
+        public void A_player_that_has_null_data_shows_HasErrored_as_true()
+        {
+            var result = sut.Convert(null);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.HasCapped, Is.False);
+            Assert.That(result.PlayerName, Is.Null);
+            Assert.That(result.HasErrored, Is.True);
         }
     }
 }
