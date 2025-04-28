@@ -49,5 +49,28 @@ namespace RSClanStatBot.Tests
             Assert.That(result.PlayerName, Is.EqualTo(FakePlayerName));
             Assert.That(result.HasErrored, Is.False);
         }
+
+        [Test]
+        public async Task A_player_with_private_profile_should_return_null_response()
+        {
+            var jsonContent = await new StreamReader("fake-player-api-response-private.json").ReadToEndAsync();
+
+            var result = sut.Convert(jsonContent);
+
+            Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public async Task A_player_has_not_capped_shows_HasCapped_as_false()
+        {
+            var jsonContent = await new StreamReader("fake-player-api-response-no-cap.json").ReadToEndAsync();
+
+            var result = sut.Convert(jsonContent);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.HasCapped, Is.False);
+            Assert.That(result.PlayerName, Is.EqualTo(FakePlayerName));
+            Assert.That(result.HasErrored, Is.False);
+        }
     }
 }

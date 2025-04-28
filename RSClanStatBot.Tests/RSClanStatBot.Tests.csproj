@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="fake-player-api-response-no-cap.json" />
+    <None Remove="fake-player-api-response-private.json" />
     <None Remove="fake-player-api-response.json" />
   </ItemGroup>
 
@@ -29,6 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="fake-player-api-response-no-cap.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fake-player-api-response-private.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="fake-player-api-response.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
