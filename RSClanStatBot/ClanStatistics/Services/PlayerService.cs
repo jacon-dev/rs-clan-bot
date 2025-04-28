@@ -25,7 +25,7 @@ namespace RSClanStatBot.ClanStatistics.Services
             catch(Exception e)
             {
                 Logger.Log($"Failed to get player data for {playerName}: {e.Message}");
-                return null;
+                return new PlayerCappingStatistic { HasErrored = true };
             }
         }
     }

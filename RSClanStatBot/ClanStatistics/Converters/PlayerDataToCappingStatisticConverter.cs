@@ -11,6 +11,9 @@ namespace RSClanStatBot.ClanStatistics.Converters
     {
         public PlayerCappingStatistic Convert(string playerData)
         {
+            if(playerData == null || playerData.Contains("error"))
+                return new PlayerCappingStatistic { HasErrored = true };
+
             if (playerData.Contains(ClanConstants.PrivateFlag))
                 return null;
             
