@@ -7,18 +7,11 @@ using RSClanStatBot.Interface.Caching;
 
 namespace RSClanStatBot.ClanStatistics.Adapters
 {
-    public class DiscordAuthorAdapter : IDiscordAuthorAdapter
+    public class DiscordAuthorAdapter(IEnumerable<ICache> factory) : IDiscordAuthorAdapter
     {
-        private readonly IEnumerable<ICache> _factory;
-
-        public DiscordAuthorAdapter(IEnumerable<ICache> factory)
-        {
-            _factory = factory;
-        }
-
         public CacheResponse AddAuthorRsName(string author, string rsName)
         {
-            return _factory.Single(x => x.Handled == ClanConstants.AuthorCacheKeyPrefix)
+            return factory.Single(x => x.Handled == ClanConstants.AuthorCacheKeyPrefix)
                 .CreateEntry(author, rsName);
         }
     }

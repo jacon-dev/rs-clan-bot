@@ -4,20 +4,13 @@ using RSClanStatBot.Interface.Services;
 
 namespace RSClanStatBot.ClanStatistics.Services
 {
-    public class HelperService : IHelperService
+    public class HelperService(IPlotAdapter plotAdapter) : IHelperService
     {
-        private readonly IPlotAdapter _plotAdapter;
-
-        public HelperService(IPlotAdapter plotAdapter)
-        {
-            _plotAdapter = plotAdapter;
-        }
-
         public DateTime GetLastPlotRefreshDate()
         {
-            return _plotAdapter.TickDate == DateTime.MinValue 
+            return plotAdapter.TickDate == DateTime.MinValue 
                 ? DateTime.Now
-                : _plotAdapter.TickDate.AddDays(-7);
+                : plotAdapter.TickDate.AddDays(-7);
         }
     }
 }

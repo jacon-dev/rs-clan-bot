@@ -8,40 +8,29 @@ using RSClanStatBot.Interface.Caching;
 
 namespace RSClanStatBot.ClanStatistics.Caching
 {
-    public class CappingCache : ICache
+    public class CappingCache(IMemoryCache cache, IPlotAdapter plotAdapter, ICacheManager cacheManager) : ICache
     {
-        private readonly IMemoryCache _cache;
-        private readonly IPlotAdapter _plotAdapter;
-        private readonly ICacheManager _cacheManager;
-
-        public CappingCache(IMemoryCache cache, IPlotAdapter plotAdapter, ICacheManager cacheManager)
-        {
-            _cache = cache;
-            _plotAdapter = plotAdapter;
-            _cacheManager = cacheManager;
-        }
-
         public string Handled => ClanConstants.CappingCacheKeyPrefix;
 
         public CacheResponse CreateEntry<TKey>(string rsName, TKey apiValidated)
         {
             var key = $"{ClanConstants.CappingCacheKeyPrefix}{rsName}";
             
-            if (_cache.TryGetValue(key, out var cacheEntry)) 
-                _cache.Remove(key);
+            if (cache.TryGetValue(key, out var cacheEntry)) 
+                cache.Remove(key);
 
-            var expiration = _plotAdapter.TickDate == DateTime.MinValue
+            var expiration = plotAdapter.TickDate == DateTime.MinValue
                 ? TimeSpan.FromDays(7)
-                : _plotAdapter.TickDate - DateTime.Now;
+                : plotAdapter.TickDate - DateTime.Now;
 
-            cacheEntry = _cache.GetOrCreate(key, entry =>
+            cacheEntry = cache.GetOrCreate(key, entry =>
             {
                 entry.SetValue(apiValidated);
                 entry.AbsoluteExpirationRelativeToNow = expiration;
                 return entry.Value;
             });
             
-            _cacheManager.BackupCache();
+            cacheManager.BackupCache();
 
             return (bool) cacheEntry
                 ? new CacheResponse { HasCapped = true, HasErrored = false, Message = Logger.Log($"{rsName} has capped at the Clan Citadel!")}

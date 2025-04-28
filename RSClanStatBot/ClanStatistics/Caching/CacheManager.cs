@@ -6,21 +6,15 @@ using RSClanStatBot.Interface.Caching;
 
 namespace RSClanStatBot.ClanStatistics.Caching
 {
-    public class CacheManager : ICacheManager
+    public class CacheManager(IMemoryCache cache) : ICacheManager
     {
         private const string CacheBackupFilePath = "CacheBackup.txt";
-        private readonly IMemoryCache _cache;
-        
-        public CacheManager(IMemoryCache cache)
-        {
-            _cache = cache;
-        }
         
         public void BackupCache()
         {
             var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", 
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var cacheEntriesCollection = cacheEntriesCollectionDefinition?.GetValue(_cache) as dynamic;
+            var cacheEntriesCollection = cacheEntriesCollectionDefinition?.GetValue(cache) as dynamic;
 
             var cacheCollection = new Dictionary<string, string>();
 
@@ -55,12 +49,12 @@ namespace RSClanStatBot.ClanStatistics.Caching
 
             foreach (var (key, value) in restoredDictionary)
             {
-                if (_cache.TryGetValue(key, out _))
-                    _cache.Remove(key);
+                if (cache.TryGetValue(key, out _))
+                    cache.Remove(key);
 
                 if(bool.TryParse(value, out var parsedBool))
                 {
-                    _cache.GetOrCreate(key, entry =>
+                    cache.GetOrCreate(key, entry =>
                     {
                         entry.SetValue(parsedBool);
                         return entry.Value;
@@ -68,7 +62,7 @@ namespace RSClanStatBot.ClanStatistics.Caching
                 }
                 else
                 {
-                    _cache.GetOrCreate(key, entry =>
+                    cache.GetOrCreate(key, entry =>
                     {
                         entry.SetValue(value);
                         return entry.Value;

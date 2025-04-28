@@ -7,15 +7,8 @@ using RSClanStatBot.Interface.Services;
 
 namespace RSClanStatBot.ClanStatistics.Converters
 {
-    public class PlayerDataToCappingStatisticConverter : IPlayerDataToCappingStatisticConverter
+    public class PlayerDataToCappingStatisticConverter(IHelperService helperService) : IPlayerDataToCappingStatisticConverter
     {
-        private readonly IHelperService _helperService;
-
-        public PlayerDataToCappingStatisticConverter(IHelperService helperService)
-        {
-            _helperService = helperService;
-        }
-        
         public PlayerCappingStatistic Convert(string playerData)
         {
             if (playerData.Contains(ClanConstants.PrivateFlag))
@@ -25,7 +18,7 @@ namespace RSClanStatBot.ClanStatistics.Converters
             var cappingActivity = playerStatistic?.Activities?.FirstOrDefault(
                 a => a.Text.Contains(ClanConstants.CapCheck));
 
-            var lastPlotRefreshDate = _helperService.GetLastPlotRefreshDate();
+            var lastPlotRefreshDate = helperService.GetLastPlotRefreshDate();
             
             if (cappingActivity?.Date >= lastPlotRefreshDate)
                 return new PlayerCappingStatistic
