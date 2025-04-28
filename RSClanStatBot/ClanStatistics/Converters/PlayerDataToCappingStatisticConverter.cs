@@ -15,8 +15,9 @@ namespace RSClanStatBot.ClanStatistics.Converters
                 return null;
             
             var playerStatistic = JsonConvert.DeserializeObject<PlayerStatistics>(playerData);
-            var cappingActivity = playerStatistic?.Activities?.FirstOrDefault(
-                a => a.Text.Contains(ClanConstants.CapCheck));
+            var cappingActivity = playerStatistic?.Activities?
+                .OrderByDescending(pa => pa.Date)
+                .FirstOrDefault(a => a.Text.Contains(ClanConstants.CapCheck));
 
             var lastPlotRefreshDate = helperService.GetLastPlotRefreshDate();
             
