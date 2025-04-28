@@ -20,7 +20,7 @@ namespace RSClanStatBot.ClanStatistics.Services
             {
                 var response = await client.GetAsync($"{apiConfig.UserApi}?user={playerName}&activities={ClanConstants.ActivityCount}");
                 response.EnsureSuccessStatusCode();
-                return converter.Convert(response.Content.ToString());
+                return converter.Convert(response.Content.ToString(), playerName);
             }
             catch(Exception e)
             {

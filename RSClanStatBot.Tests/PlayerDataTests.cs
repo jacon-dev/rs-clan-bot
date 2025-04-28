@@ -2,6 +2,7 @@ using FakeItEasy;
 using NUnit.Framework.Internal;
 using RSClanStatBot.ClanStatistics.Converters;
 using RSClanStatBot.Interface.Services;
+using System.Net.Http.Json;
 
 namespace RSClanStatBot.Tests
 {
@@ -26,7 +27,7 @@ namespace RSClanStatBot.Tests
             A.CallTo(() => fakeHelperService.GetLastPlotRefreshDate())
                 .Returns(new DateTime(2025, 4, 20));
             
-            var result = sut.Convert(jsonContent);
+            var result = sut.Convert(jsonContent, FakePlayerName);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.HasCapped, Is.True);
@@ -42,7 +43,7 @@ namespace RSClanStatBot.Tests
             A.CallTo(() => fakeHelperService.GetLastPlotRefreshDate())
                 .Returns(new DateTime(2025, 4, 30));
 
-            var result = sut.Convert(jsonContent);
+            var result = sut.Convert(jsonContent, FakePlayerName);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.HasCapped, Is.False);
@@ -55,7 +56,7 @@ namespace RSClanStatBot.Tests
         {
             var jsonContent = await new StreamReader("fake-player-api-response-private.json").ReadToEndAsync();
 
-            var result = sut.Convert(jsonContent);
+            var result = sut.Convert(jsonContent, FakePlayerName);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.HasCapped, Is.False);
@@ -69,7 +70,7 @@ namespace RSClanStatBot.Tests
         {
             var jsonContent = await new StreamReader("fake-player-api-response-no-cap.json").ReadToEndAsync();
 
-            var result = sut.Convert(jsonContent);
+            var result = sut.Convert(jsonContent, FakePlayerName);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.HasCapped, Is.False);
@@ -82,22 +83,22 @@ namespace RSClanStatBot.Tests
         {
             var jsonContent = await new StreamReader("fake-player-api-response-error.json").ReadToEndAsync();
 
-            var result = sut.Convert(null);
+            var result = sut.Convert(jsonContent, FakePlayerName);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.HasCapped, Is.False);
-            Assert.That(result.PlayerName, Is.Null);
+            Assert.That(result.PlayerName, Is.EqualTo(FakePlayerName));
             Assert.That(result.HasErrored, Is.True);
         }
 
         [Test]
         public void A_player_that_has_null_data_shows_HasErrored_as_true()
         {
-            var result = sut.Convert(null);
+            var result = sut.Convert(null, FakePlayerName);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.HasCapped, Is.False);
-            Assert.That(result.PlayerName, Is.Null);
+            Assert.That(result.PlayerName, Is.EqualTo(FakePlayerName));
             Assert.That(result.HasErrored, Is.True);
         }
     }

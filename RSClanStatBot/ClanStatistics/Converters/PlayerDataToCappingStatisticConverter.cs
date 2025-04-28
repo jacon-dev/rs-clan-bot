@@ -9,13 +9,13 @@ namespace RSClanStatBot.ClanStatistics.Converters
 {
     public class PlayerDataToCappingStatisticConverter(IHelperService helperService) : IPlayerDataToCappingStatisticConverter
     {
-        public PlayerCappingStatistic Convert(string playerData)
+        public PlayerCappingStatistic Convert(string playerData, string playerName)
         {
             if(playerData == null || playerData.Contains("error"))
-                return new PlayerCappingStatistic { HasErrored = true };
+                return new PlayerCappingStatistic { HasErrored = true, PlayerName = playerName };
 
             if (playerData.Contains(ClanConstants.PrivateFlag))
-                return null;
+                return new PlayerCappingStatistic { IsPrivate = true, PlayerName = playerName };
             
             var playerStatistic = JsonConvert.DeserializeObject<PlayerStatistics>(playerData);
             var cappingActivity = playerStatistic?.Activities?
